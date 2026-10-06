@@ -19,4 +19,6 @@ userRouter.post(
     userController.registerUser
 )
 
+userRouter.post('/login', userController.loginUser)
+
 export default userRouter
