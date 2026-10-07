@@ -89,7 +89,7 @@ const loginUser = async (req, res) => {
     try {
         const { username, email, password } = req.body ?? {}
 
-        if (!email || !username) {
+        if (!email && !username) {
             return res.status(400).json({
                 message: 'Email or username and password are required',
             })
@@ -133,8 +133,20 @@ const loginUser = async (req, res) => {
     }
 }
 
-export { registerUser, loginUser }
+const logoutUser = async (req, res) => {
+    try {
+        res.clearCookie('accessToken')
+        res.clearCookie('refreshToken')
+        return res.status(200).json({ message: 'User logged out successfully' })
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ message: `Error in logout controller: ${error.message}` })
+    }
+}
+
 export default {
     registerUser,
     loginUser,
+    logoutUser,
 }
